@@ -22,6 +22,7 @@ export default function Home() {
   const title = globalState;
 
   const getData = async (title) => {
+    setError(null);
     try {
       const data = await axios.get(
         `/api/photos?title=${title}&page=${dataPage}`
@@ -40,6 +41,7 @@ export default function Home() {
   };
 
   const getMoreData = async (title) => {
+    setError(null);
     try {
       const data = await axios.get(
         `/api/photos?title=${title}&page=${dataPage}`
