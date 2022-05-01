@@ -20,19 +20,19 @@ a {
   border: 1px solid black;
   text-align: center;
 }
-.album-pad {
+.photo-pad {
   text-align: center;
   border-radius: 10px;
   position: relative;
-  top: 0;
-  left: 0;
   overflow: hidden;
 }
 .image {
   width: 100%;
+  height: 400px;
   object-fit: cover;
+  display: block;
 }
-.album-title {
+.photo-title {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -41,7 +41,20 @@ a {
   color: aliceblue;
   transform: translateY(100%);
   transition: all 0.3s linear;
+  padding: 10px;
+  font-weight: 700;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
 }
-.album-pad:hover .album-title {
-  transform: translateY(0);
+.photo-pad:hover .photo-title {
+  transform: translateY(0%);
+}
+
+.avatar {
+  width: 20%;
+  height: 20%;
+  object-fit: cover;
+  border-radius: 50%;
+  align-self: center;
 }

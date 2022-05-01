@@ -2,9 +2,9 @@ import "../styles/globals.css";
 import { AppWrapper } from "../context";
 
 function MyApp({ Component, pageProps }) {
-  const artist = pageProps.artist;
+  const title = pageProps.artist;
   const value =
-    artist !== null && artist !== undefined ? artist : "Celine Dion";
+    title !== null && title !== undefined ? title : "Catch me if you can";
   return (
     <AppWrapper value={value}>
       <Component {...pageProps} />
