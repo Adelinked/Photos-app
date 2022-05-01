@@ -40,7 +40,7 @@ export default function Home() {
       if (title) setPhotos([...photos, ...data.data.msg.results]);
       else setPhotos([...photos, ...data.data.msg]);
     } catch (error) {
-      setError(error);
+      setError(error.response.data);
       setLoadingBottom(false);
     }
 
@@ -97,7 +97,7 @@ export default function Home() {
             href="https://unsplash.com/developers"
             target="_blank"
             rel="noreferrer"
-            title="Powered by unsplash Api"
+            title="Powered by unsplash A+pi"
           >
             <img
               style={{ width: "70px" }}
@@ -121,7 +121,9 @@ export default function Home() {
                 ))}
               </div>
             ) : (
-              <div style={{ fontWeight: "600" }}>No results to show</div>
+              <div style={{ fontWeight: "600" }}>
+                No results to show {" (" + error + ")"}
+              </div>
             )}
           </>
         )}
