@@ -47,6 +47,9 @@ export default function Home() {
       if (title) setPhotos([...photos, ...data.data.msg.results]);
       else setPhotos([...photos, ...data.data.msg]);
     } catch (error) {
+      setDataPage((oldPage) => {
+        return oldPage > 1 ? oldPage - 1 : oldPage;
+      });
       setError(error.response.data);
       setShowError(true);
       setTimeout(() => {
