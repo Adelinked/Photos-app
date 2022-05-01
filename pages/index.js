@@ -14,6 +14,7 @@ export default function Home() {
   const { globalState, setGlobalState } = useAppContext();
   const [loadingBottom, setLoadingBottom] = useState(false);
   const [error, setError] = useState();
+  const [showError, setShowError] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [dataPage, setDataPage] = useState(1);
 
@@ -27,7 +28,13 @@ export default function Home() {
       );
       if (title) setPhotos(data.data.msg.results);
       else setPhotos(data.data.msg);
-    } catch (error) {}
+    } catch (error) {
+      setError(error.response.data);
+      setShowError(true);
+      setTimeout(() => {
+        setShowError(false);
+      }, 500);
+    }
 
     setLoading(false);
   };
@@ -41,6 +48,10 @@ export default function Home() {
       else setPhotos([...photos, ...data.data.msg]);
     } catch (error) {
       setError(error.response.data);
+      setShowError(true);
+      setTimeout(() => {
+        setShowError(false);
+      }, 500);
       setLoadingBottom(false);
     }
 
@@ -121,12 +132,11 @@ export default function Home() {
                 ))}
               </div>
             ) : (
-              <div style={{ fontWeight: "600" }}>
-                No results to show {" (" + error + ")"}
-              </div>
+              <div style={{ fontWeight: "600" }}>No results to show</div>
             )}
           </>
         )}
+        {showError ? <p>{error}</p> : <p></p>}
         {loadingBottom && (
           <div style={{ marginTop: "10px", width: "80px" }}>
             <CircularProgress style={{ width: "50px" }} />
