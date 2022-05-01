@@ -1,20 +1,19 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { FreeSoloCreateOption } from "../components/SearchInput";
-import Movie from "../components/Movie";
+import SearchInput from "../components/SearchInput";
 import Photo from "../components/Photo";
 
 import { CircularProgress } from "@mui/material";
 
 import { useAppContext } from "../context";
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const { globalState, setGlobalState } = useAppContext();
   const [loadingBottom, setLoadingBottom] = useState(false);
-
+  const [error, setError] = useState();
   const [photos, setPhotos] = useState([]);
   const [dataPage, setDataPage] = useState(1);
 
@@ -38,10 +37,10 @@ export default function Home() {
       const data = await axios.get(
         `/api/photos?title=${title}&page=${dataPage}`
       );
-      console.log("get more");
       if (title) setPhotos([...photos, ...data.data.msg.results]);
       else setPhotos([...photos, ...data.data.msg]);
     } catch (error) {
+      setError(error);
       setLoadingBottom(false);
     }
 
@@ -63,22 +62,10 @@ export default function Home() {
     getMoreData(globalState);
   }, [dataPage]);
 
-  const event = (e) => {
-    const {
-      offsetHeight,
-      scrollTop,
-      scrollHeight,
-      scrollTopMax,
-      clientHeight,
-    } = e.target.documentElement;
-
-    if (clientHeight + scrollTop === scrollHeight) {
+  const event = () => {
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
       setLoadingBottom(true);
     }
-    /*  if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
-      setDataPage((dataPage) => dataPage + 1);
-      setLoadingBottom(true);
-    }*/
   };
 
   useEffect(() => {
@@ -87,7 +74,7 @@ export default function Home() {
   }, []);
 
   const handleChange = (e) => {
-    const title = e.target.innerText;
+    const title = e.target.value;
     setGlobalState(title);
     setLoading(true);
 
@@ -107,16 +94,20 @@ export default function Home() {
         <div className={styles.appTitleDiv} style={{ marginBottom: "10px" }}>
           <h1 className={styles.appTitle}>Photos</h1>
           <a
-            href="http://www.omdbapi.com/"
+            href="https://unsplash.com/developers"
             target="_blank"
             rel="noreferrer"
-            title="Powered by"
+            title="Powered by unsplash Api"
           >
-            <img style={{ width: "70px" }} src="omdb_api.png" alt="omdb logo" />
+            <img
+              style={{ width: "70px" }}
+              src="unsplash.png"
+              alt="unsplash logo"
+            />
           </a>
         </div>
 
-        <FreeSoloCreateOption handleChange={handleChange} disabled={loading} />
+        <SearchInput handleChange={handleChange} />
         {loading ? (
           <div style={{ marginTop: "10px" }}>
             <CircularProgress />
@@ -130,7 +121,7 @@ export default function Home() {
                 ))}
               </div>
             ) : (
-              <div>No results to show</div>
+              <div style={{ fontWeight: "600" }}>No results to show</div>
             )}
           </>
         )}

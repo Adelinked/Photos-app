@@ -7,6 +7,25 @@ import { useAppContext } from "../context";
 
 export default function SearchInput(props) {
   const { globalState } = useAppContext();
+  const title = globalState;
+
+  return (
+    <>
+      <TextField
+        className="search"
+        onChange={props.handleChange}
+        label="Title"
+        variant="standard"
+        id="photoTitle"
+        sx={{ width: 400 }}
+        value={title}
+      />
+    </>
+  );
+}
+
+export function SearchInputAuto(props) {
+  const { globalState } = useAppContext();
   const artist = globalState;
 
   return (
