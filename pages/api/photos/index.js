@@ -11,12 +11,11 @@ export default async function handler(req, res) {
   const query = title ? `&query=${title}` : ``;
 
   url = `${url}?client_id=${apiKey}&page=${page}${query}`;
-  //console.log(url);
+  console.log(url);
   try {
     const data = await axios.get(`${url}`);
     res.status(200).json({ msg: data.data });
   } catch (error) {
     res.status(400).json(error.response.data);
   }
-  //
 }

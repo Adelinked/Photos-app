@@ -1,3 +1,4 @@
+/*
 const apiKey = process.env.LASTFM_API_KEY;
 
 export default async function albumHandler({ query: { id } }, res) {
@@ -11,3 +12,4 @@ export default async function albumHandler({ query: { id } }, res) {
     //res.status(400).json({ msg: error });
   }
 }
+*/
